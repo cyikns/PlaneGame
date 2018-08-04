@@ -1,8 +1,16 @@
 package cn.ncufz.planeGame;
 
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Date;
 
 /**
  * 飞机游戏窗口类
@@ -20,9 +28,18 @@ public class PlaneGameFrame extends Frame {
     //    Shell shell = new Shell();
     Shell[] shells = new Shell[56];
 
+    Explode bao;
+
+    Date startTime = new Date();
+    Date endTime;
+    int period;
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
+        Color c = g.getColor();
+        Font font = g.getFont();
 
         g.drawImage(bg, 0, 0, null);
 
@@ -30,6 +47,36 @@ public class PlaneGameFrame extends Frame {
 
         for (int i = 0; i < shells.length; i++) {
             shells[i].draw(g);
+
+            //飞机和炮弹的碰撞检测！！！
+            boolean peng = shells[i].getRect().intersects(plane.getRect());
+//            boolean  peng = shells[i].getRect().intersects(plane.getRect());
+
+            if (peng) {
+                System.out.println("发生碰撞了");
+                plane.live = false;
+
+                if (bao == null) {
+                    bao = new Explode(plane.x, plane.y);
+
+                    endTime = new Date();
+
+                    period = (int) ((endTime.getTime() - startTime.getTime()) / 1000);
+                }
+
+                bao.draw(g);
+            }
+
+            //计时功能开启，给出提示
+
+            if (!plane.live){
+
+                g.setColor(Color.RED);
+                Font f = new Font("微软雅黑",Font.BOLD,22);
+                g.setFont(f);
+                g.drawString("时间："+period+"秒",250,250);
+            }
+
         }
     }
 

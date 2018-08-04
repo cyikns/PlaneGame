@@ -1,6 +1,9 @@
 package cn.ncufz.planeGame;
 
-import java.awt.*;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
 
 /**
  * @author cyikns
@@ -41,7 +44,8 @@ public class GameObject {
      * 返回物体所在的矩形，便于后续的碰撞检测
      * @return
      */
-    public Rectangle getRec(){
+    public Rectangle getRect(){
         return new Rectangle((int) x,(int) y,width,height);
+
     }
 }

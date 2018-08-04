@@ -1,10 +1,11 @@
 package cn.ncufz.planeGame;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 /**
- * 飞机
+ * 飞机类
  *
  * @author cyikns
  * @create 2018-08-04 9:54
@@ -13,27 +14,35 @@ public class Plane extends GameObject {
 
     int speed = 3;
     boolean left, up, right, down;
+    boolean live = true;
 
     @Override
     protected void drawSelf(Graphics g) {
-        g.drawImage(image, (int) x, (int) y, null);
 
-        if (left) {
-            x -= speed;
-        }
-        if (up) {
-            y -= speed;
-        }
-        if (right) {
-            x += speed;
-        }
-        if (down) {
-            y += speed;
+        if (live) {
+            g.drawImage(image, (int) x, (int) y, null);
+
+            if (left) {
+                x -= speed;
+            }
+            if (up) {
+                y -= speed;
+            }
+            if (right) {
+                x += speed;
+            }
+            if (down) {
+                y += speed;
+            }
         }
     }
 
     public Plane(Image image, double x, double y) {
         super(image, x, y);
+
+        this.speed = 3;
+        this.width = 22;
+        this.height = 33;
     }
 
     //增加方向
